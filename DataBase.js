@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const uri = 'mongodb://localhost:27017/<tinyurl>'
+const uri = 'mongodb://localhost:27017/tinyurl'
 
 const connectDB = async () => {
     await mongoose.connect(uri)

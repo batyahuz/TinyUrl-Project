@@ -1,4 +1,4 @@
-import UserModel from '../Models/UserModel'
+import UserModel from '../Models/UserModel.js'
 
 const UsersController = {
     getUsers: async (req, res) => {

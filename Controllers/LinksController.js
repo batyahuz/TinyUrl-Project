@@ -1,4 +1,5 @@
-import LinkModel from '../Models/LinkModel'
+import LinkModel from '../Models/LinkModel.js'
+import UserModel from '../Models/UserModel.js'
 
 const LinksController = {
     getLinks: async (req, res) => {
@@ -18,8 +19,14 @@ const LinksController = {
         }
     },
     add: async (req, res) => {
+        const { id } = req.params.id
         try {
             const newLink = await LinkModel.create(req.body)
+            if (id) {
+                const user = await UserModel.findById(req.params.id)
+                user.links.push(newLink)
+                await user.save()
+            }
             res.json(newLink)
         } catch (error) {
             res.status(400).json({ message: error.message })

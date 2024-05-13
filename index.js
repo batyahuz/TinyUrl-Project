@@ -2,9 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
-import LinksRouter from './Routers/LinksRouter'
-import UsersRouter from './Routers/UsersRouter'
-import connectDB from './DataBase'
+import LinksRouter from './Routers/LinksRouter.js'
+import UsersRouter from './Routers/UsersRouter.js'
+import connectDB from './DataBase.js'
 
 connectDB()
 const app = express()
@@ -21,5 +21,7 @@ app.listen(port, () => {
 })
 
 app.get('/', (req, res) => {
+    const date = new Date()
+    console.log('date', date)
     res.send('Hello World!')
 })
