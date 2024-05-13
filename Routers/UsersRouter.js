@@ -3,10 +3,10 @@ import UsersController from '../Controllers/UsersController'
 
 const UsersRouter = express.Router()
 
-TasksRouter.get('/', UsersController.getUsers)
-TasksRouter.get('/:id', UsersController.getById)
-TasksRouter.post('/', UsersController.add)
-TasksRouter.put('/:id', UsersController.update)
-TasksRouter.delete('/:id', UsersController.delete)
+UsersRouter.get('/', UsersController.getUsers)
+UsersRouter.get('/:id', UsersController.getById)
+UsersRouter.post('/', UsersController.add)
+UsersRouter.put('/:id', UsersController.update)
+UsersRouter.delete('/:id', UsersController.delete)
 
 export default UsersRouter

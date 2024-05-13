@@ -6,7 +6,7 @@ const UsersController = {
             const users = await UserModel.find()
             res.json(users)
         } catch (error) {
-            res.status(400).json({ message: e.message })
+            res.status(400).json({ message: error.message })
         }
     },
     getById: async (req, res) => {
