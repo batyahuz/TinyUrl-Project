@@ -1,58 +1,48 @@
-// const users = [
-//     {
-//         _id: 1,
-//         name: "my name",
-//         email: "aa@gmail.com",
-//         password: "1234",
-//         links: []
-//     },
-//     {
-//         _id: 2,
-//         name: "my name",
-//         email: "aa@gmail.com",
-//         password: "1234",
-//         links: []
-//     },
-//     {
-//         _id: 3,
-//         name: "my name",
-//         email: "aa@gmail.com",
-//         password: "1234",
-//         links: []
-//     },
-// ]
+import UserModel from '../Models/UserModel'
 
 const UsersController = {
-    getLinks: (req, res) => {
-        res.send(users)
-    },
-    getById: (req, res) => {
-        const { id } = req.params
-        res.send(users.find(user => user._id === id))
-    },
-    add: (req, res) => {
-        users.push(req.body)
-        res.sendStatus(201)
-    },
-    update: (req, res) => {
-        const { id } = req.params
-        const newUser = req.body
-        const index = users.findIndex(user => user._id === id)
-
-        if (index !== -1) {
-            users[index].name = newUser.name
-            users[index].email = newUser.email
-            users[index].password = newUser.password
-            users[index].links = newUser.links
+    getUsers: async (req, res) => {
+        try {
+            const users = await UserModel.find()
+            res.json(users)
+        } catch (error) {
+            res.status(400).json({ message: e.message })
         }
-        res.sendStatus(201)
     },
-    delete: (req, res) => {
+    getById: async (req, res) => {
+        try {
+            const user = await UserModel.findById(req.params.id)
+            res.json(user)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    add: async (req, res) => {
+        try {
+            const newUser = await UserModel.create(req.body)
+            res.json(newUser)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    update: async (req, res) => {
         const { id } = req.params
-        users.splice(users.findIndex(user => user._id === id), 1)
-        res.sendStatus(204)
+        try {
+            const updatedUser = await UserModel.findByIdAndUpdate(id, req.body, { new: true })
+            res.json(updatedUser)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    delete: async (req, res) => {
+        const { id } = req.params
+        try {
+            const deletedUser = await UserModel.findByIdAndDelete(id)
+            res.json(deletedUser)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
     }
 }
 
 export default UsersController
-

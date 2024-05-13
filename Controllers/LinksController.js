@@ -1,36 +1,47 @@
-// const links = [
-//     { _id: 1, originalUrl: "myurl" },
-//     { _id: 2, originalUrl: "hi!" },
-//     { _id: 3, originalUrl: "nothing" },
-//     { _id: 4, originalUrl: "my name is Batya" },
-// ]
+import LinkModel from '../Models/LinkModel'
 
 const LinksController = {
-    getLinks: (req, res) => {
-        res.send(links)
-    },
-    getById: (req, res) => {
-        const { id } = req.params
-        res.send(links.find(link => link._id === id))
-    },
-    add: (req, res) => {
-        links.push(req.body)
-        res.sendStatus(201)
-    },
-    update: (req, res) => {
-        const { id } = req.params
-        const newLink = req.body
-        const index = links.findIndex(link => link._id === id)
-        
-        if (index !== -1) {
-            links[index].originalUrl = newLink.originalUrl
+    getLinks: async (req, res) => {
+        try {
+            const links = await LinkModel.find()
+            res.json(links)
+        } catch (error) {
+            res.status(400).json({ message: e.message })
         }
-        res.sendStatus(201)
     },
-    delete: (req, res) => {
+    getById: async (req, res) => {
+        try {
+            const link = await LinkModel.findById(req.params.id)
+            res.json(link)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    add: async (req, res) => {
+        try {
+            const newLink = await LinkModel.create(req.body)
+            res.json(newLink)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    update: async (req, res) => {
         const { id } = req.params
-        links.splice(links.findIndex(link => link._id === id), 1)
-        res.sendStatus(204)
+        try {
+            const updatedLink = await LinkModel.findByIdAndUpdate(id, req.body, { new: true })
+            res.json(updatedLink)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    delete: async (req, res) => {
+        const { id } = req.params
+        try {
+            const deletedLink = await LinkModel.findByIdAndDelete(id)
+            res.json(deletedLink)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
     }
 }
 

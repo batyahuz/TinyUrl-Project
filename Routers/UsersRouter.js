@@ -3,7 +3,7 @@ import UsersController from '../Controllers/UsersController'
 
 const UsersRouter = express.Router()
 
-TasksRouter.get('/', UsersController.getLinks)
+TasksRouter.get('/', UsersController.getUsers)
 TasksRouter.get('/:id', UsersController.getById)
 TasksRouter.post('/', UsersController.add)
 TasksRouter.put('/:id', UsersController.update)
