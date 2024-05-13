@@ -1,26 +1,26 @@
-const users = [
-    {
-        _id: 1,
-        name: "my name",
-        email: "aa@gmail.com",
-        password: "1234",
-        links: []
-    },
-    {
-        _id: 2,
-        name: "my name",
-        email: "aa@gmail.com",
-        password: "1234",
-        links: []
-    },
-    {
-        _id: 3,
-        name: "my name",
-        email: "aa@gmail.com",
-        password: "1234",
-        links: []
-    },
-]
+// const users = [
+//     {
+//         _id: 1,
+//         name: "my name",
+//         email: "aa@gmail.com",
+//         password: "1234",
+//         links: []
+//     },
+//     {
+//         _id: 2,
+//         name: "my name",
+//         email: "aa@gmail.com",
+//         password: "1234",
+//         links: []
+//     },
+//     {
+//         _id: 3,
+//         name: "my name",
+//         email: "aa@gmail.com",
+//         password: "1234",
+//         links: []
+//     },
+// ]
 
 const UsersController = {
     getLinks: (req, res) => {

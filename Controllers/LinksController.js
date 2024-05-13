@@ -1,9 +1,9 @@
-const links = [
-    { _id: 1, originalUrl: "myurl" },
-    { _id: 2, originalUrl: "hi!" },
-    { _id: 3, originalUrl: "nothing" },
-    { _id: 4, originalUrl: "my name is Batya" },
-]
+// const links = [
+//     { _id: 1, originalUrl: "myurl" },
+//     { _id: 2, originalUrl: "hi!" },
+//     { _id: 3, originalUrl: "nothing" },
+//     { _id: 4, originalUrl: "my name is Batya" },
+// ]
 
 const LinksController = {
     getLinks: (req, res) => {

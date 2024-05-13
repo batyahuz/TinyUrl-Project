@@ -4,8 +4,9 @@ import bodyParser from 'body-parser'
 
 import LinksRouter from './Routers/LinksRouter'
 import UsersRouter from './Routers/UsersRouter'
+import connectDB from './DataBase'
 
-
+connectDB()
 const app = express()
 
 app.use(cors())
