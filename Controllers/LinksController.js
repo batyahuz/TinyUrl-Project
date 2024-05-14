@@ -11,19 +11,20 @@ const LinksController = {
         }
     },
     getById: async (req, res) => {
+        const { id } = req.params
         try {
-            const link = await LinkModel.findById(req.params.id)
+            const link = await LinkModel.findById(id)
             res.json(link)
         } catch (error) {
             res.status(400).json({ message: error.message })
         }
     },
     add: async (req, res) => {
-        const { id } = req.params.id
+        const { id } = req.params
         try {
             const newLink = await LinkModel.create(req.body)
             if (id) {
-                const user = await UserModel.findById(req.params.id)
+                const user = await UserModel.findById(id)
                 user.links.push(newLink)
                 await user.save()
             }

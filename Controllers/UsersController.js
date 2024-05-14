@@ -10,8 +10,9 @@ const UsersController = {
         }
     },
     getById: async (req, res) => {
+        const { id } = req.params
         try {
-            const user = await UserModel.findById(req.params.id)
+            const user = await UserModel.findById(id)
             res.json(user)
         } catch (error) {
             res.status(400).json({ message: error.message })

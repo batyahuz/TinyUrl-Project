@@ -6,8 +6,14 @@ const LinkSchema = mongoose.Schema({
         required: true
     },
     clicks: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'clicks'
+        insertedAt: {
+            type: Date,
+            required: true
+        },
+        ipAddress: {
+            type: String,
+            required: true
+        }
     }]
 })
 

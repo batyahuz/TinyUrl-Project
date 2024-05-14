@@ -1,4 +1,3 @@
-import ClickModel from "../Models/ClickModel.js"
 import LinkModel from "../Models/LinkModel.js"
 
 const RedirectController = {
@@ -9,11 +8,11 @@ const RedirectController = {
             if (!link) {
                 return res.status(404).json({ message: 'Link not found' })
             }
-            const click = new ClickModel({
+            link.clicks.push({
                 insertedAt: new Date(),
                 ipAddress: req.ip
             })
-            link.clicks.push(click)
+            console.log('link.clicks', link.clicks);
             await link.save()
             res.redirect(link.originalUrl)
 
