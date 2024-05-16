@@ -2,7 +2,7 @@ import LinkModel from '../Models/LinkModel.js'
 import UserModel from '../Models/UserModel.js'
 
 const getShortLink = (link) => {
-    return '/' + link.alias + '?' + link.targetParamName + '='
+    return `${req.protocol}://${req.get('host')}/${link.alias}?${link.targetParamName}=`
 }
 
 const LinksController = {
@@ -15,9 +15,9 @@ const LinksController = {
         }
     },
     getById: async (req, res) => {
-        const { id } = req.params
+        const { alias } = req.params
         try {
-            const link = await LinkModel.find({ id: id })
+            const link = await LinkModel.findOne({ alias: alias })
             res.json(link)
         } catch (error) {
             res.status(400).json({ message: error.message })
@@ -25,12 +25,13 @@ const LinksController = {
     },
     add: async (req, res) => {
         const { userId } = req.params
+        const { alias } = req.body
         try {
-            const existLink = await LinkModel.find({ id: req.body.alias })
+            const existLink = await LinkModel.findOne({ alias: alias })
             if (existLink) {
-                return req.status(409).json({ message: 'alias is not available' })//TODO
+                return res.status(409).json({ message: 'alias is not available' })//TODO
             }
-            const newLink = await LinkModel.create({ ...(req.body), targetParamName: 't' })
+            const newLink = await LinkModel.create({ targetParamName: 'target', ...(req.body) })
             if (userId) {
                 const user = await UserModel.findById(userId)
                 user.links.push(newLink)
@@ -42,19 +43,29 @@ const LinksController = {
         }
     },
     update: async (req, res) => {
-        const { id } = req.params
+        const { alias } = req.params
         try {
-            const updatedLink = await LinkModel.findByIdAndUpdate(id, req.body, { new: true })
+            const updatedLink = await LinkModel.findOneAndUpdate(
+                { alias: alias },
+                req.body,
+                { new: true }
+            )
+            if (!updatedLink) {
+                return res.status(404).json({ message: 'Link not found' })
+            }
             res.send(getShortLink(updatedLink))
         } catch (error) {
             res.status(400).json({ message: error.message })
         }
     },
     delete: async (req, res) => {
-        const { id } = req.params
+        const { alias } = req.params
         try {
-            const deletedLink = await LinkModel.findByIdAndDelete(id)
-            res.send(getShortLink(deletedLink))
+            const deletedLink = await LinkModel.findOneAndDelete({ alias: alias })
+            if (!deletedLink) {
+                return res.status(404).json({ message: 'Link not found' })
+            }
+            res.status(200).json({ message: 'Link deleted successfully' })
         } catch (error) {
             res.status(400).json({ message: error.message })
         }

@@ -4,10 +4,10 @@ import LinksController from '../Controllers/LinksController.js'
 const LinksRouter = express.Router()
 
 LinksRouter.get('/', LinksController.getLinks)
-LinksRouter.get('/:id', LinksController.getById)
+LinksRouter.get('/:alias', LinksController.getById)
 LinksRouter.post('/', LinksController.add)
 LinksRouter.post('/:userId', LinksController.add)
-LinksRouter.put('/:id', LinksController.update)
-LinksRouter.delete('/:id', LinksController.delete)
+LinksRouter.put('/:alias', LinksController.update)
+LinksRouter.delete('/:alias', LinksController.delete)
 
 export default LinksRouter
