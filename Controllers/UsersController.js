@@ -3,7 +3,7 @@ import UserModel from '../Models/UserModel.js'
 const UsersController = {
     getUsers: async (req, res) => {
         try {
-            const users = await UserModel.find()
+            const users = await UserModel.find().select('-links')
             res.json(users)
         } catch (error) {
             res.status(400).json({ message: error.message })
@@ -12,7 +12,10 @@ const UsersController = {
     getById: async (req, res) => {
         const { id } = req.params
         try {
-            const user = await UserModel.findById(id)
+            const user = await UserModel.findById(id).populate({
+                path: 'links',
+                select: 'alias originalUrl -_id'
+            }).lean()
             res.json(user)
         } catch (error) {
             res.status(400).json({ message: error.message })
