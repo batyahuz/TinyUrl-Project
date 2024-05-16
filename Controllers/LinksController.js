@@ -29,7 +29,7 @@ const LinksController = {
         try {
             const existLink = await LinkModel.findOne({ alias: alias })
             if (existLink) {
-                return res.status(409).json({ message: 'alias is not available' })//TODO
+                return res.status(409).json({ message: 'alias is not available' })
             }
             const newLink = await LinkModel.create({ targetParamName: 'target', ...(req.body) })
             if (userId) {
