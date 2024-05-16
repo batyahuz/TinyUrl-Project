@@ -14,7 +14,7 @@ const LinksController = {
             res.status(400).json({ message: error.message })
         }
     },
-    getById: async (req, res) => {
+    getByAlias: async (req, res) => {
         const { alias } = req.params
         try {
             const link = await LinkModel.findOne({ alias: alias })
