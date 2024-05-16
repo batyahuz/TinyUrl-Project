@@ -8,6 +8,14 @@ const connectDB = async () => {
 
 const database = mongoose.connection
 
+mongoose.set('toJSON', {
+    virtuals: true,
+    transform: (doc, converted) => {
+        delete converted._id
+    }
+})
+
+
 database.on('error', (error) => {
     console.log(error)
 })

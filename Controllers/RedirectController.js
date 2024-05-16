@@ -2,9 +2,9 @@ import LinkModel from "../Models/LinkModel.js"
 
 const RedirectController = {
     redirect: async (req, res) => {
-        const { id } = req.params
+        const { alias } = req.params
         try {
-            const link = await LinkModel.findById(id)
+            const link = await LinkModel.find({ alias: alias })
             if (!link) {
                 return res.status(404).json({ message: 'Link not found' })
             }
@@ -12,7 +12,7 @@ const RedirectController = {
                 insertedAt: new Date(),
                 ipAddress: req.ip
             })
-            console.log('link.clicks', link.clicks);
+            console.log('link.clicks', link.clicks)
             await link.save()
             res.redirect(link.originalUrl)
 
